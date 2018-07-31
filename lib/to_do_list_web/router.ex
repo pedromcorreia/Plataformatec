@@ -16,6 +16,7 @@ defmodule ToDoListWeb.Router do
   scope "/", ToDoListWeb do
     pipe_through :browser # Use the default browser stack
 
+    resources("/sessions", SessionController, only: [:new, :create])
     resources "/users", UserController
     get "/", PageController, :index
   end
