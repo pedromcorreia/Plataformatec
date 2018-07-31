@@ -1,15 +1,13 @@
-<div class="box has-text-centered">
-  <div class="column">
-    <h1 class="title"><%= gettext "Don't lose track of your goals" %></h1>
-  </div>
+<div class="column">
+  <h1 class="title"><%= gettext "Don't lose track of your goals" %></h1>
+</div>
 
-  <div class="column">
-    <p>Before starting your next thing, break it down into tasks! The best solution for </br>
-    getting started on anything big is to break it up into the small parts.</br>
-    Do you wanna know how to bake a chocolate cake? Or What are the best</br>
-    places to visit in Rome? You can see our <a>users public lists</a> to start your activies.</p>
-  </div>
-  <div class="column">
-      <a class="button">Sign in</a>
-  </div>
+<div class="column">
+  <p>Before starting your next thing, break it down into tasks! The best solution for </br>
+  getting started on anything big is to break it up into the small parts.</br>
+  Do you wanna know how to bake a chocolate cake? Or What are the best</br>
+  places to visit in Rome? You can see our <a>users public lists</a> to start your activies.</p>
+</div>
+<div class="column">
+  <%= link "Sign in", to: user_path(@conn, :new), class: "button" %>
 </div>
