@@ -1,36 +1,15 @@
-<div class="jumbotron">
-  <h2><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h2>
-  <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
-</div>
-
-<div class="box">
-  <div class="col-lg-6">
-    <h4>Resources</h4>
-    <ul>
-      <li>
-        <a href="http://phoenixframework.org/docs/overview">Guides</a>
-      </li>
-      <li>
-        <a href="https://hexdocs.pm/phoenix">Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-    </ul>
+<div class="box has-text-centered">
+  <div class="column">
+    <h1 class="title"><%= gettext "Don't lose track of your goals" %></h1>
   </div>
 
-  <div class="col-lg-6">
-    <h4>Help</h4>
-    <ul>
-      <li>
-        <a href="http://groups.google.com/group/phoenix-talk">Mailing list</a>
-      </li>
-      <li>
-        <a href="http://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">@elixirphoenix</a>
-      </li>
-    </ul>
+  <div class="column">
+    <p>Before starting your next thing, break it down into tasks! The best solution for </br>
+    getting started on anything big is to break it up into the small parts.</br>
+    Do you wanna know how to bake a chocolate cake? Or What are the best</br>
+    places to visit in Rome? You can see our <a>users public lists</a> to start your activies.</p>
+  </div>
+  <div class="column">
+      <a class="button">Sign in</a>
   </div>
 </div>
