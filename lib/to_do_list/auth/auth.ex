@@ -51,7 +51,7 @@ defmodule ToDoList.Auth do
   """
   def create_user(attrs \\ %{}) do
     %User{}
-    |> User.changeset(attrs)
+    |> User.password_changeset(attrs)
     |> Repo.insert()
   end
 
