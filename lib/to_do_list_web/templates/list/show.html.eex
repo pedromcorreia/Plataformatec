@@ -1,0 +1,18 @@
+<h2>Show List</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @list.name %>
+  </li>
+
+  <li>
+    <strong>Type:</strong>
+    <%= @list.type %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: list_path(@conn, :edit, @list) %></span>
+<span><%= link "Back", to: list_path(@conn, :index) %></span>

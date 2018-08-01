@@ -29,18 +29,21 @@ defmodule ToDoListWeb.Router do
     pipe_through :browser
     coherence_routes()
   end
+
   scope "/" do
     pipe_through :protected
     coherence_routes :protected
   end
 
   scope "/", ToDoListWeb do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :browser
 
     get "/", PageController, :index
   end
 
   scope "/", ToDoListWeb do
-        pipe_through :protected
+    pipe_through :protected
+
+    resources "/lists", ListController
   end
 end
