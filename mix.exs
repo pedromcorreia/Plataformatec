@@ -20,7 +20,7 @@ defmodule ToDoList.Mixfile do
   def application do
     [
       mod: {ToDoList.Application, []},
-      extra_applications: [:logger, :runtime_tools, :coherence]
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
@@ -41,7 +41,7 @@ defmodule ToDoList.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
-      {:coherence, "~> 0.4"}
+      {:coherence, github: "smpallen99/coherence"}
     ]
   end
 
