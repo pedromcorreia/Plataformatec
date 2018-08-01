@@ -1,17 +1,16 @@
-<br \>
+<h3 class="title"><%= gettext "Recovery your account" %></h3>
 
-<h3><%= dgettext "coherence", "Send reset password link" %></h3>
+<h3 class="subtitle"><%= gettext "Provide your e-mail and you'll receive an e-mail with the recovery instructions." %></h3>
 
 <%= form_for @changeset, password_path(@conn, :create), [as: :password], fn f  -> %>
 
-  <div class="form-group">
-    <%= required_label f, :email, class: "control-label" %>
-    <%= text_input f, :email, class: "form-control", required: "" %>
+  <div class="field">
+    <%= required_label f, :email, class: "label" %>
+    <%= text_input f, :email, class: "input", required: "" %>
     <%= error_tag f, :email %>
   </div>
 
   <div class="form-group">
-    <%= submit dgettext("coherence", "Reset Password"), class: "btn btn-primary" %>
-    <%= link dgettext("coherence", "Cancel"), to: Coherence.Config.logged_out_url("/"), class: "btn" %>
+    <%= submit gettext("Recover!"), class: "button" %>
   </div>
 <% end %>

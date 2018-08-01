@@ -17,12 +17,12 @@
        <div id="navMenu" class="navbar-menu">
          <div class="navbar-end">
             <a class="navbar-item" href="/">Home</a>
-            <a class="navbar-item" href="/">Sign in</a>
+            <a class="navbar-item" href="/sessions/new">Sign in</a>
           </div>
         </div>
       </div>
     </nav>
-    <div class="container">
+    <div class="container has-text-centered">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
