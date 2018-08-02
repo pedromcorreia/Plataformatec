@@ -15,19 +15,19 @@
     <%= error_tag f, :description %>
   </div>
 
-    <%= hidden_input f, :list_id, class: "input", value: @list.id %>
+  <%= hidden_input f, :list_id, class: "input", value: @list.id %>
 <% end %>
 
 <table class="table is-fullwidth">
   <tbody>
-<%= for goal <- @goals do %>
-    <tr>
-      <td><input type="checkbox"/></td>
-      <td><%= label :description, goal.description, class: "label" %></td>
-      <td><%= link "Edit", to: goal_path(@conn, :edit, goal), class: "btn btn-default btn-xs" %></td>
-      <td><%= button "x", to: goal_path(@conn, :delete, goal), method: :delete, class: "button" %></td>
-    </tr>
-<% end %>
+    <%= for goal <- @goals do %>
+      <tr>
+        <td><input type="checkbox"/></td>
+        <td><%= label :description, goal.description, class: "label" %></td>
+        <td><%= link "Edit", to: goal_path(@conn, :edit, goal), class: "btn btn-default btn-xs" %></td>
+        <td><%= button "x", to: goal_path(@conn, :delete, goal), method: :delete, class: "button" %></td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
 
