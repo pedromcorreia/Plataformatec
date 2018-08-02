@@ -1,7 +1,6 @@
-<div class="box has-text-centered">
-  <div class="column">
-    <h1 class="title"><%= gettext "Don't lose track of your goals" %></h1>
-  </div>
+<div class="column">
+  <h1 class="title"><%= gettext "Don't lose track of your goals" %></h1>
+</div>
 
   <div class="column">
     <p>Before starting your next thing, break it down into tasks! The best solution for </br>

@@ -1,0 +1,25 @@
+<div class="columns session-container">
+  <div class="column is-half is-offset-one-quarter">
+    <label class="label sign-login-text"><%= gettext("Sign in to your account here") %>:</label>
+
+    <%= form_for @changeset, session_path(@conn, :create), fn f -> %>
+
+      <div class="field">
+        <div class="control login_email_field">
+          <%= email_input f, :email, class: "input login_email", autofocus: true, placeholder: :email %>
+        </div>
+        <%= error_tag f, :email %>
+      </div>
+
+      <div class="field">
+        <div class="control login_password_field">
+          <%= password_input f, :password, class: "input login_password", placeholder: :password %>
+        </div>
+        <%= error_tag f, :password %>
+      </div>
+
+      <%= submit gettext("Sign In"), class: "button is-primary is-fullwidth sign-login-button" %>
+    <% end %>
+  </div>
+</div>
+

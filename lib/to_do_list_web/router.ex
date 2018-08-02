@@ -38,6 +38,8 @@ defmodule ToDoListWeb.Router do
   scope "/", ToDoListWeb do
     pipe_through :browser
 
+    resources("/sessions", SessionController, only: [:new, :create])
+    resources "/users", UserController
     get "/", PageController, :index
   end
 
