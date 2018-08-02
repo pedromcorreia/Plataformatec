@@ -1,0 +1,17 @@
+<h1 class="title has-text-left">
+  <u><%= @list.title %></u>
+</h1>
+<h2 class="subtitle has-text-left">
+  by @<%= String.replace(@user.name, " ","") %> - Created
+  <%= Timex.diff(Timex.now, @list.inserted_at, :hours) %>
+  hours ago
+</h2>
+
+<%= form_for @conn, goal_path(@conn, :create), [as: :goal],fn f -> %>
+
+  <div class="field">
+    <label class="label">Breakdown time! Type the task name and hit enter.</label>
+    <%= text_input f, :description, class: "input" %>
+    <%= error_tag f, :description %>
+  </div>
+<% end %>

@@ -1,0 +1,7 @@
+<h1 class="title has-text-left">
+  <u><%= gettext "Create a To-Do-List" %></u>
+</h1>
+<h2 class="subtitle">
+  <%= gettext "A trip? A project? A User Story? Insert the name of your next big thing." %>
+</h2>
+<%= render "form.html", Map.put(assigns, :action, list_path(@conn, :create)) %>

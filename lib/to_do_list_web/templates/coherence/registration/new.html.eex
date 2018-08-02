@@ -1,0 +1,5 @@
+<h3 class="title"><%= gettext "Join now the world leader of To-Do lists" %></h3>
+
+<%= render "form.html", changeset: @changeset,
+                        label: dgettext("coherence", "Register"), required: [required: ""],
+                        action: registration_path(@conn, :create) %>
