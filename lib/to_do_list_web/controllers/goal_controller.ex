@@ -19,9 +19,8 @@ defmodule ToDoListWeb.GoalController do
     case Task.create_goal(goal_params) do
       {:ok, goal} ->
         list = Task.get_list!(goal.list_id)
-        goals = Task.list_goals_by_list_id(list.id)
-        user = Schemas.get_user(list.user_id)
-        render(conn, "show.html", list: list, user: user, goals: goals)
+        conn
+        |> redirect(to: list_path(conn, :show, list))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -43,9 +42,9 @@ defmodule ToDoListWeb.GoalController do
 
     case Task.update_goal(goal, goal_params) do
       {:ok, goal} ->
+        list = Task.get_list!(goal.list_id)
         conn
-        |> put_flash(:info, "Goal updated successfully.")
-        |> redirect(to: goal_path(conn, :show, goal))
+        |> redirect(to: list_path(conn, :show, list))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", goal: goal, changeset: changeset)
     end
@@ -53,10 +52,10 @@ defmodule ToDoListWeb.GoalController do
 
   def delete(conn, %{"id" => id}) do
     goal = Task.get_goal!(id)
+    list = Task.get_list!(goal.list_id)
     {:ok, _goal} = Task.delete_goal(goal)
 
     conn
-    |> put_flash(:info, "Goal deleted successfully.")
-    |> redirect(to: goal_path(conn, :index))
+    |> redirect(to: list_path(conn, :show, list))
   end
 end
