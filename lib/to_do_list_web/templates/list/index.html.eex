@@ -12,7 +12,7 @@
   <tbody>
 <%= for list <- @lists do %>
     <tr>
-      <td><%= list.name %></td>
+      <td><%= list.title %></td>
       <td><%= list.type %></td>
 
       <td class="text-right">

@@ -6,8 +6,8 @@
   <% end %>
 
   <div class="field">
-    <%= text_input f, :name, class: "input" %>
-    <%= error_tag f, :name %>
+    <%= text_input f, :title, class: "input" %>
+    <%= error_tag f, :title %>
   </div>
 
   <div class="control has-text-centered">

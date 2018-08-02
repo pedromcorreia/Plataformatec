@@ -3,6 +3,8 @@ defmodule ToDoListWeb.ListController do
 
   alias ToDoList.Task
   alias ToDoList.Task.List
+  alias ToDoList.Coherence.Schemas
+  alias ToDoListWeb.Helpers
 
   def index(conn, _params) do
     lists = Task.list_lists()
@@ -15,7 +17,7 @@ defmodule ToDoListWeb.ListController do
   end
 
   def create(conn, %{"list" => list_params}) do
-    case Task.create_list(list_params) do
+    case Task.create_list(Map.merge(list_params, Helpers.get_user_id(conn))) do
       {:ok, list} ->
         conn
         |> put_flash(:info, "List created successfully.")
@@ -27,7 +29,8 @@ defmodule ToDoListWeb.ListController do
 
   def show(conn, %{"id" => id}) do
     list = Task.get_list!(id)
-    render(conn, "show.html", list: list)
+    user = Schemas.get_user(list.user_id)
+    render(conn, "show.html", list: list, user: user)
   end
 
   def edit(conn, %{"id" => id}) do

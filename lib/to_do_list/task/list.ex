@@ -4,8 +4,9 @@ defmodule ToDoList.Task.List do
 
 
   schema "lists" do
-    field :name, :string
+    field :title, :string
     field :type, :string
+    field :user_id, :id
 
     timestamps()
   end
@@ -13,7 +14,7 @@ defmodule ToDoList.Task.List do
   @doc false
   def changeset(list, attrs) do
     list
-    |> cast(attrs, [:name, :type])
-    |> validate_required([:name, :type])
+    |> cast(attrs, [:title, :type, :user_id])
+    |> validate_required([:title, :type, :user_id])
   end
 end

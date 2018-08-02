@@ -3,9 +3,9 @@ defmodule ToDoListWeb.ListControllerTest do
 
   alias ToDoList.Task
 
-  @create_attrs %{name: "some name", type: "some type"}
-  @update_attrs %{name: "some updated name", type: "some updated type"}
-  @invalid_attrs %{name: nil, type: nil}
+  @create_attrs %{title: "some title", type: "some type"}
+  @update_attrs %{title: "some updated title", type: "some updated type"}
+  @invalid_attrs %{title: nil, type: nil}
 
   def fixture(:list) do
     {:ok, list} = Task.create_list(@create_attrs)
@@ -60,7 +60,7 @@ defmodule ToDoListWeb.ListControllerTest do
       assert redirected_to(conn) == list_path(conn, :show, list)
 
       conn = get conn, list_path(conn, :show, list)
-      assert html_response(conn, 200) =~ "some updated name"
+      assert html_response(conn, 200) =~ "some updated title"
     end
 
     test "renders errors when data is invalid", %{conn: conn, list: list} do

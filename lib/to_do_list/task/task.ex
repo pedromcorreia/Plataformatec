@@ -52,6 +52,7 @@ defmodule ToDoList.Task do
   def create_list(attrs \\ %{}) do
     %List{}
     |> List.changeset(attrs)
+    |> IO.inspect
     |> Repo.insert()
   end
 
