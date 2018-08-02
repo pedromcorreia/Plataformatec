@@ -14,7 +14,7 @@ defmodule ToDoList.Task.Goal do
   @doc false
   def changeset(goal, attrs) do
     goal
-    |> cast(attrs, [:description, :status])
-    |> validate_required([:description, :status])
+    |> cast(attrs, [:description, :status, :list_id])
+    |> validate_required([:description, :status, :list_id])
   end
 end

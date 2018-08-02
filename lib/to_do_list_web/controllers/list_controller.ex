@@ -29,8 +29,9 @@ defmodule ToDoListWeb.ListController do
 
   def show(conn, %{"id" => id}) do
     list = Task.get_list!(id)
+    goals = Task.list_goals_by_list_id(list.id)
     user = Schemas.get_user(list.user_id)
-    render(conn, "show.html", list: list, user: user)
+    render(conn, "show.html", list: list, user: user, goals: goals)
   end
 
   def edit(conn, %{"id" => id}) do

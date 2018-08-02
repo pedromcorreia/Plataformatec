@@ -3,6 +3,7 @@ defmodule ToDoListWeb.GoalController do
 
   alias ToDoList.Task
   alias ToDoList.Task.Goal
+  alias ToDoList.Coherence.Schemas
 
   def index(conn, _params) do
     goals = Task.list_goals() |> IO.inspect
@@ -17,9 +18,10 @@ defmodule ToDoListWeb.GoalController do
   def create(conn, %{"goal" => goal_params}) do
     case Task.create_goal(goal_params) do
       {:ok, goal} ->
-        conn
-        |> put_flash(:info, "Goal created successfully.")
-        |> redirect(to: goal_path(conn, :show, goal))
+        list = Task.get_list!(goal.list_id)
+        goals = Task.list_goals_by_list_id(list.id)
+        user = Schemas.get_user(list.user_id)
+        render(conn, "show.html", list: list, user: user, goals: goals)
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

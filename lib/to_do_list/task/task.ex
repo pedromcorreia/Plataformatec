@@ -17,6 +17,7 @@ defmodule ToDoList.Task do
       [%List{}, ...]
 
   """
+
   def list_lists do
     Repo.all(List)
   end
@@ -52,7 +53,6 @@ defmodule ToDoList.Task do
   def create_list(attrs \\ %{}) do
     %List{}
     |> List.changeset(attrs)
-    |> IO.inspect
     |> Repo.insert()
   end
 
@@ -104,6 +104,21 @@ defmodule ToDoList.Task do
   end
 
   alias ToDoList.Task.Goal
+
+  @doc """
+  Returns the list of goals by list_id.
+
+  ## Examples
+
+      iex> list_goals_by_list_id(4)
+      [%Goal{}, ...]
+
+  """
+  def list_goals_by_list_id(list_id) do
+    Goal
+    |> where(list_id: ^list_id)
+    |> Repo.all()
+  end
 
   @doc """
   Returns the list of goals.
