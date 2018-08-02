@@ -15,7 +15,6 @@ defmodule ToDoListWeb.GoalController do
   end
 
   def create(conn, %{"goal" => goal_params}) do
-    IO.inspect goal_params
     case Task.create_goal(goal_params) do
       {:ok, goal} ->
         conn
