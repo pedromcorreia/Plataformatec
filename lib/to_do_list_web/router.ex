@@ -45,5 +45,6 @@ defmodule ToDoListWeb.Router do
     pipe_through :protected
 
     resources "/lists", ListController
+    resources "/goals", GoalController
   end
 end
