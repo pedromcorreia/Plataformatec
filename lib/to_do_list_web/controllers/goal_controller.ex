@@ -5,7 +5,7 @@ defmodule ToDoListWeb.GoalController do
   alias ToDoList.Task.Goal
 
   def index(conn, _params) do
-    goals = Task.list_goals()
+    goals = Task.list_goals() |> IO.inspect
     render(conn, "index.html", goals: goals)
   end
 
