@@ -10,6 +10,8 @@
     places to visit in Rome? You can see our <a>users public lists</a> to start your activies.</p>
   </div>
   <div class="column">
-    <a class="button" href="/registrations/new">Sign up</a>
+    <%= if (@conn |> Map.get(:assigns) |> Map.get(:current_user)) == nil do %>
+      <a class="button" href="/registrations/new">Sign up</a>
+    <% end %>
   </div>
 </div>

@@ -14,10 +14,19 @@
   <body>
     <nav class="navbar is-white">
       <div class="container">
-       <div id="navMenu" class="navbar-menu">
-         <div class="navbar-end">
-            <a class="navbar-item" href="/">Home</a>
-            <a class="navbar-item" href="/sessions/new">Sign in</a>
+        <div id="navMenu" class="navbar-menu">
+          <div class="navbar-end">
+            <a class="navbar-item" href="/lists">My To-Do-Lists</a>
+            <a class="navbar-item" href="/">Favorites</a>
+            <a class="navbar-item" href="/">Recent lists</a>
+            <a class="navbar-item" href="/">Account</a>
+
+            <%= if (@conn |> Map.get(:assigns) |> Map.get(:current_user)) == nil do %>
+              <a class="navbar-item" href="/sessions/new">Sign in</a>
+            <% else %>
+              <a><%= link "Sign out", to: session_path(@conn, :delete), method: "delete", class: "navbar-item" %></a>
+            <% end %>
+
           </div>
         </div>
       </div>
