@@ -2,10 +2,11 @@ defmodule ToDoListWeb.UserController do
   use ToDoListWeb, :controller
 
   alias ToDoList.Auth
+  alias ToDoList.Coherence.Schemas
   alias ToDoList.Auth.User
 
   def index(conn, _params) do
-    users = Auth.list_users()
+    users = Schemas.list_user()
     render(conn, "index.html", users: users)
   end
 
@@ -15,7 +16,7 @@ defmodule ToDoListWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    case Auth.create_user(user_params) do
+    case Schemas.create_user(user_params) do
       {:ok, user} ->
         conn
         |> put_flash(:info, "User created successfully.")
@@ -26,20 +27,23 @@ defmodule ToDoListWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Auth.get_user!(id)
+    user = Schemas.get_user!(id)
     render(conn, "show.html", user: user)
   end
 
   def edit(conn, %{"id" => id}) do
-    user = Auth.get_user!(id)
-    changeset = Auth.change_user(user)
+    user = Schemas.get_user!(id)
+    changeset = Schemas.change_user(user, %{})
     render(conn, "edit.html", user: user, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Auth.get_user!(id)
+    user = Schemas.get_user!(id)
+    user_params =
+      user_params
+      |> Map.drop(["name"])
 
-    case Auth.update_user(user, user_params) do
+    case Schemas.update_user(user, user_params) do
       {:ok, user} ->
         conn
         |> put_flash(:info, "User updated successfully.")

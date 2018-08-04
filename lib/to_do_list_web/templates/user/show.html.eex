@@ -4,7 +4,7 @@
 
   <li>
     <strong>Username:</strong>
-    <%= @user.username %>
+    <%= @user.name %>
   </li>
 
   <li>

@@ -11,8 +11,7 @@ defmodule ToDoListWeb.RecentController do
       Task.list_recent_lists()
       |> Enum.map(fn(x) ->
         goals = Task.list_goals_by_list_id(x.id)
-        x
-        |> Map.put(:goals_total, Enum.count(goals))
+        Map.put(x, :goals_total, Enum.count(goals))
       end)
 
     render(conn, "index.html", lists: lists)

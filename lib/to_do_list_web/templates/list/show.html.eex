@@ -22,7 +22,7 @@
   <tbody>
     <%= for goal <- @goals do %>
 
-      <%= form_for @conn, goal_path(@conn, :update, goal),fn f -> %>
+      <%= form_for @conn, goal_path(@conn, :update, goal), [method: :put], fn f -> %>
          <td><input type="checkbox" id="<%= goal.id %>" class="todolistcheckbox"/></td>
         <%= submit "Submit", class: "checkbox" %>
        <% end %>
@@ -33,5 +33,3 @@
     <% end %>
   </tbody>
 </table>
-
-

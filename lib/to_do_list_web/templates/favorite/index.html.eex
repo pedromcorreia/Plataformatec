@@ -12,7 +12,7 @@
       <a href="<%= show_list(list) %>">
         <div class="box">
           <label class="label"><%= list.title %></label>
-          <label class="label">by @<%= concatenate_name(list.user.name) %></label>
+          <label class="label"><a href="/users/<%=list.user.id %>">by @<%= concatenate_name(list.user.name) %></a></label>
           <label class="label"><%= difference_date(list) %> - <%= list.goals_total %> tasks</label>
         </div>
       </a>

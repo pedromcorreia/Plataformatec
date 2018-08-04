@@ -28,7 +28,7 @@ defmodule ToDoList.Coherence.Schemas do
   end
 
   def change_user(struct, params) do
-    @user_schema.changeset struct, params
+   @user_schema.changeset struct, params
   end
 
   def change_user(params) do

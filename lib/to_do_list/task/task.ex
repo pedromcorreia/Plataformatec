@@ -8,28 +8,39 @@ defmodule ToDoList.Task do
 
   alias ToDoList.Task.List
 
-  @doc """
-  Returns the list of lists.
-
-  ## Examples
-
-      iex> list_lists()
-      [%List{}, ...]
-
-  """
-
-  def list_lists_by_user(%{"user_id" => user_id}) do
-    List
-    |> where(user_id: ^user_id)
-    |> preload(:user)
-    |> Repo.all()
-  end
+   @doc false
 
   def list_recent_lists do
     List
     |> limit(6)
     |> order_by(:inserted_at)
     |> where(type: "public")
+    |> preload(:user)
+    |> Repo.all()
+  end
+
+  @doc false
+  def list_lists_by_user_id(user_id, :public) do
+    List
+    |> where([user_id: ^user_id, type: "public"])
+    |> limit(6)
+    |> order_by(desc: :inserted_at)
+    |> Repo.all()
+  end
+
+  def list_lists_by_user_id(user_id, _all) do
+    List
+    |> where([user_id: ^user_id])
+    |> limit(6)
+    |> order_by(desc: :inserted_at)
+    |> Repo.all()
+  end
+
+  @doc false
+
+  def list_lists_by_user(%{"user_id" => user_id}) do
+    List
+    |> where(user_id: ^user_id)
     |> preload(:user)
     |> Repo.all()
   end
@@ -126,9 +137,12 @@ defmodule ToDoList.Task do
       [%Goal{}, ...]
 
   """
+
   def list_goals_by_list_id(list_id) do
     Goal
     |> where(list_id: ^list_id)
+    |> limit(6)
+    |> order_by(desc: :inserted_at)
     |> Repo.all()
   end
 
