@@ -6,7 +6,7 @@ defmodule ToDoListWeb.GoalController do
   alias ToDoList.Coherence.Schemas
 
   def index(conn, _params) do
-    goals = Task.list_goals() |> IO.inspect
+    goals = Task.list_goals()
     render(conn, "index.html", goals: goals)
   end
 

@@ -2,19 +2,17 @@
   <u>My To-Do-List</u>
 </h1>
 
-<%= link "New List", to: list_path(@conn, :new), class: "button" %>
+<%= link "Create new", to: list_path(@conn, :new), class: "button" %>
 
 <div class="columns is-multiline">
 
   <%= for list <- @lists do %>
 
     <div class="column is-one-third">
-      <a href="/show/ #{list.id}">
+      <a href="<%= show_list(list) %>">
         <div class="box">
           <label class="label"><%= list.title %></label>
-          <td class="text-right">
-            <span><%= link "Show", to: list_path(@conn, :show, list), class: "btn btn-default btn-xs" %></span>
-          </td>
+          <label class="label"><%= difference_date(list) %> - <%= list.goals_total %>/<%= list.goals_done %> tasks</label>
         </div>
       </a>
     </div>

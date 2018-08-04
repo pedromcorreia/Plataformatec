@@ -1,12 +1,13 @@
 defmodule ToDoList.Task.Goal do
   use Ecto.Schema
   import Ecto.Changeset
-
+  alias ToDoList.Task.List
 
   schema "goals" do
     field :description, :string
     field :status, :string, default: "doing"
-    field :list_id, :id
+    belongs_to(:list, List)
+
 
     timestamps()
   end

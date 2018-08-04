@@ -1,12 +1,14 @@
 defmodule ToDoList.Task.List do
   use Ecto.Schema
   import Ecto.Changeset
+  alias ToDoList.Coherence.User
 
 
   schema "lists" do
     field :title, :string
     field :type, :string
-    field :user_id, :id
+    belongs_to(:user, User)
+
 
     timestamps()
   end

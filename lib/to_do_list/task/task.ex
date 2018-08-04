@@ -18,6 +18,14 @@ defmodule ToDoList.Task do
 
   """
 
+
+  def list_lists_by_user(%{"user_id" => user_id}) do
+    List
+    |> where(user_id: ^user_id)
+    |> preload(:user)
+    |> Repo.all()
+  end
+
   def list_lists do
     Repo.all(List)
   end
