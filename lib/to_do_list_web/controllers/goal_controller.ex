@@ -50,6 +50,24 @@ defmodule ToDoListWeb.GoalController do
     end
   end
 
+  def update(conn, %{"id" => id, "status" => status}) do
+    goal = Task.get_goal!(id)
+    goal_params =
+      if status == "done" do
+        %{status: "doing"}
+      else
+        %{status: "done"}
+      end
+    case Task.update_goal(goal, goal_params) do
+      {:ok, goal} ->
+        list = Task.get_list!(goal.list_id)
+        conn
+        |> redirect(to: list_path(conn, :show, list))
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "edit.html", goal: goal, changeset: changeset)
+    end
+  end
+
   def delete(conn, %{"id" => id}) do
     goal = Task.get_goal!(id)
     list = Task.get_list!(goal.list_id)

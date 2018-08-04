@@ -1,7 +1,13 @@
 .todolist-goal {
   &-done {
-    label{
       text-decoration: line-through;
-    }
+  }
+}
+
+.star {
+  font-size: 200%;
+  color: black;
+  &-favorite {
+    color: yellow;
   }
 }

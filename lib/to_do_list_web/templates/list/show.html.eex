@@ -23,13 +23,17 @@
     <%= for goal <- @goals do %>
 
       <%= form_for @conn, goal_path(@conn, :update, goal), [method: :put], fn f -> %>
-         <td><input type="checkbox" id="<%= goal.id %>" class="todolistcheckbox"/></td>
-        <%= submit "Submit", class: "checkbox" %>
-       <% end %>
-      <td><%= label :description, goal.description, class: "label" %></td>
+
+        <td class="todolistcheckbox"><%= submit "Submit", class: "checkbox" %></td>
+        <%= hidden_input f, :id, class: "input", value: goal.id %>
+        <%= hidden_input f, :status, class: "input", value: goal.status %>
+      <% end %>
+      <td><%= label :description, goal.description, class: "label todolist-goal#{status_goal(goal)}" %></td>
       <td><%= link "Edit", to: goal_path(@conn, :edit, goal), class: "btn btn-default btn-xs" %></td>
       <td><%= button "x", to: goal_path(@conn, :delete, goal), method: :delete, class: "button" %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<span><%= link "Delete List", to: list_path(@conn, :delete, @list), method: :delete, data: [confirm: "Are you sure?"], class: "button is-danger" %></span>
