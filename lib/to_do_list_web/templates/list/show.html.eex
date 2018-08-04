@@ -2,7 +2,7 @@
   <u><%= @list.title %></u>
 </h1>
 <h2 class="subtitle has-text-left">
-  by @<%= String.replace(@user.name, " ","") %> - Created
+  by @<%= concatenate_name(@user.name) %> - Created
   <%= Timex.diff(Timex.now, @list.inserted_at, :hours) %>
   hours ago
 </h2>

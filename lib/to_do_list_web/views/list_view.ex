@@ -29,5 +29,8 @@ defmodule ToDoListWeb.ListView do
         "#{weeks} week#{diffence_plural(weeks, 1)} ago"
     end
   end
+
   defp diffence_plural(difference_time, minimum), do: if difference_time != minimum, do: "s"
+
+  def concatenate_name(name), do: String.replace(name, " ","")
 end

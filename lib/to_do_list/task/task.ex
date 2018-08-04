@@ -18,7 +18,6 @@ defmodule ToDoList.Task do
 
   """
 
-
   def list_lists_by_user(%{"user_id" => user_id}) do
     List
     |> where(user_id: ^user_id)
@@ -26,8 +25,13 @@ defmodule ToDoList.Task do
     |> Repo.all()
   end
 
-  def list_lists do
-    Repo.all(List)
+  def list_recent_lists do
+    List
+    |> limit(6)
+    |> order_by(:inserted_at)
+    |> where(type: "public")
+    |> preload(:user)
+    |> Repo.all()
   end
 
   @doc """

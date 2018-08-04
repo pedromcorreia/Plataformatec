@@ -48,5 +48,7 @@ defmodule ToDoListWeb.Router do
 
     resources "/lists", ListController
     resources "/goals", GoalController
+    resources "/favorites", FavoriteController, only: [:index]
+    resources "/recents", RecentController, only: [:index]
   end
 end

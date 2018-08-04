@@ -1,0 +1,7 @@
+.todolist-goal {
+  &-done {
+    label{
+      text-decoration: line-through;
+    }
+  }
+}
