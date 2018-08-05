@@ -20,3 +20,16 @@ import "phoenix_html"
 
 // import socket from "./socket"
 //
+
+let editGoal = document.querySelectorAll('.todolist--editable');
+Array.from(editGoal).forEach(link => {
+  link.addEventListener('click', function(event) {
+
+    let label = (this.childNodes[1]);
+    label.disabled = '';
+
+  });
+});
+
+
+

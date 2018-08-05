@@ -28,8 +28,13 @@
         <%= hidden_input f, :id, class: "input", value: goal.id %>
         <%= hidden_input f, :status, class: "input", value: goal.status %>
       <% end %>
-      <td><%= label :description, goal.description, class: "label todolist-goal#{status_goal(goal)}" %></td>
-      <td><%= link "Edit", to: goal_path(@conn, :edit, goal), class: "btn btn-default btn-xs" %></td>
+
+      <%= form_for @conn, goal_path(@conn, :update, goal), [method: :put, id: "edit-goal"], fn f -> %>
+        <td class="todolist--editable">
+          <%= text_input :description, goal.description, value: goal.description, disabled: "disabled", class: "label todolist-goal#{status_goal(goal)}" %>
+        </td>
+      <% end %>
+
       <td><%= button "x", to: goal_path(@conn, :delete, goal), method: :delete, class: "button" %></td>
       </tr>
     <% end %>

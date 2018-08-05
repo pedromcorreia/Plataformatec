@@ -68,6 +68,21 @@ defmodule ToDoListWeb.GoalController do
     end
   end
 
+  def update(conn, %{"id" => id, "description" => description}) do
+    goal = Task.get_goal!(id)
+    goal_params =
+      Map.new()
+      |> Map.put(:description, List.first(Map.values(description)))
+    case Task.update_goal(goal, goal_params) do
+      {:ok, goal} ->
+        note = Task.get_note!(goal.note_id)
+        conn
+        |> redirect(to: note_path(conn, :show, note))
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "edit.html", goal: goal, changeset: changeset)
+    end
+  end
+
   def delete(conn, %{"id" => id}) do
     goal = Task.get_goal!(id)
     note = Task.get_note!(goal.note_id)
