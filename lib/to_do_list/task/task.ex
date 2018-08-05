@@ -54,7 +54,7 @@ defmodule ToDoList.Task do
 
   ## Examples
 
-      iex> get_note!(123)
+      iex> get_note(123)
       %Note{}
 
       iex> get_note!(456)
@@ -65,6 +65,12 @@ defmodule ToDoList.Task do
     Note
     |> preload(:user)
     |> Repo.get!(id)
+  end
+
+  def get_note(id) do
+    Note
+    |> preload(:user)
+    |> Repo.get(id)
   end
 
   @doc false

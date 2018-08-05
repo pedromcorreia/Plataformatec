@@ -38,17 +38,21 @@ defmodule ToDoListWeb.NoteController do
   end
 
   def show(conn, %{"id" => id}) do
-    note = Task.get_note!(id)
-    goals = Task.list_goals_by_note_id(note.id)
-    user = Schemas.get_user(note.user_id)
-    changeset = Task.change_goal(%Goal{})
-    render(conn, "show.html", changeset: changeset, note: note, user: user, goals: goals)
-  end
-
-  def edit(conn, %{"id" => id}) do
-    note = Task.get_note!(id)
-    changeset = Task.change_note(note)
-    render(conn, "edit.html", note: note, changeset: changeset)
+    note = Task.get_note(id)
+    if note == nil do conn
+    |> send_resp(404, "Not found")
+    |> halt()
+    end
+    if note.user_id == Map.get(Helpers.get_user_id(conn), "user_id") do
+      goals = Task.list_goals_by_note_id(note.id)
+      user = Schemas.get_user(note.user_id)
+      changeset = Task.change_goal(%Goal{})
+      render(conn, "show.html", changeset: changeset, note: note, user: user, goals: goals)
+    else
+      conn
+      |> send_resp(404, "Not found")
+      |> halt()
+    end
   end
 
   def update(conn, %{"id" => id, "note" => note_params}) do

@@ -1,11 +1,17 @@
-<h1 class="title has-text-left">
-  <u><%= @note.title %></u>
-</h1>
-<h2 class="subtitle has-text-left">
-  by @<%= concatenate_name(@user.name) %> - Created
-  <%= Timex.diff(Timex.now, @note.inserted_at, :hours) %>
-  hours ago
-</h2>
+<div class="box">
+  <div class="field has-addons">
+    <div class="control is-expanded">
+      <h1 class="title has-text-left">
+        <%= @note.title %>
+      </h1>
+      <h2 class="subtitle has-text-left">
+        by @<%= concatenate_name(@user.name) %> - Created
+        <%= Timex.diff(Timex.now, @note.inserted_at, :hours) %>
+        hours ago
+      </h2>
+    </div>
+  </div>
+</div>
 
 <%= form_for @conn, goal_path(@conn, :create), [as: :goal],fn f -> %>
 
@@ -28,7 +34,7 @@
           <td class="todolistcheckbox"><%= submit "", class: "button checked" %></td>
         <% else %>
           <td class="todolistcheckbox"><%= submit "", class: "button unchecked" %></td>
-      <% end %>
+        <% end %>
         <%= hidden_input f, :id, class: "input", value: goal.id %>
         <%= hidden_input f, :status, class: "input", value: goal.status %>
       <% end %>

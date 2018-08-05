@@ -1,7 +1,15 @@
-<h1 class="title has-text-left">
-  <u><%= gettext "Create a To-Do-List" %></u>
-</h1>
-<h2 class="subtitle">
-  <%= gettext "A trip? A project? A User Story? Insert the name of your next big thing." %>
-</h2>
+<div class="box">
+  <div class="field has-addons">
+    <div class="control is-expanded">
+      <h1 class="title has-text-left">
+        <%= gettext "Create a To-Do-List" %>
+      </h1>
+      <h2 class="subtitle">
+        <%= gettext "A trip? A project? A User Story? Insert the name of your next big thing." %>
+      </h2>
+    </div>
+
+  </div>
+</div>
+
 <%= render "form.html", Map.put(assigns, :action, note_path(@conn, :create)) %>
