@@ -22,15 +22,13 @@
               <%= if is_private(@conn) do %>
                 <%= if note.is_favorite do %>
                   <%= form_for @conn, favorite_path(@conn, :delete, note), [method: :delete], fn f -> %>
-                    <span class="star-favorite">&starf;</span>
                     <%= hidden_input f, :id, class: "input", value: note.id %>
-                    <td class="todolistcheckbox"><%= submit "Submit", class: "checkbox" %></td>
+                    <%= submit "★", class: "star-favorite" %>
                   <% end %>
                 <% else %>
                   <%= form_for @conn, favorite_path(@conn, :create), fn f -> %>
-                    <span class="star">&#9734;</span>
                     <%= hidden_input f, :id, class: "input", value: note.id %>
-                    <td class="todolistcheckbox"><%= submit "Submit", class: "checkbox" %></td>
+                    <%= submit "★", class: "star" %>
                   <% end %>
                 <% end %>
               <% end %>

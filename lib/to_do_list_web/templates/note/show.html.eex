@@ -24,14 +24,18 @@
 
       <%= form_for @conn, goal_path(@conn, :update, goal), [method: :put], fn f -> %>
 
-        <td class="todolistcheckbox"><%= submit "Submit", class: "checkbox" %></td>
+        <%= if goal.status == "done" do %>
+          <td class="todolistcheckbox"><%= submit "", class: "button checked" %></td>
+        <% else %>
+          <td class="todolistcheckbox"><%= submit "", class: "button unchecked" %></td>
+      <% end %>
         <%= hidden_input f, :id, class: "input", value: goal.id %>
         <%= hidden_input f, :status, class: "input", value: goal.status %>
       <% end %>
 
       <%= form_for @conn, goal_path(@conn, :update, goal), [method: :put, id: "edit-goal"], fn f -> %>
         <td class="todolist--editable">
-          <%= text_input :description, goal.description, value: goal.description, disabled: "disabled", class: "label todolist-goal#{status_goal(goal)}" %>
+          <%= text_input :description, goal.description, value: goal.description, disabled: "disabled", class: "input todolist-goal#{status_goal(goal)}" %>
         </td>
       <% end %>
 

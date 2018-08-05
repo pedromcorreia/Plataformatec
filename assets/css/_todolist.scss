@@ -5,11 +5,21 @@
 }
 
 .star {
-  font-size: 200%;
-  color: black;
+  background: url('/images/unfavorite.svg');
   &-favorite {
-    color: yellow;
+    background: url('/images/favorite.svg');
   }
+}
+
+.checked {
+  background: url('/images/checked.png');
+  background-repeat-x: no-repeat;
+  background-repeat-y: no-repeat;
+}
+.unchecked {
+  background: url('/images/unchecked.png');
+  background-repeat-x: no-repeat;
+  background-repeat-y: no-repeat;
 }
 
 html,body {

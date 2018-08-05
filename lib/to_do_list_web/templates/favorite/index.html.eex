@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<div class="row columns">
+<div class="row columns is-multiline">
   <%= for favorite <- @favorites do %>
 
     <div class="column is-one-third">
@@ -24,9 +24,8 @@
               <%= form_for @conn, favorite_path(@conn, :delete, favorite), [method: :delete], fn f -> %>
 
                 <p class="title is-4 no-padding"><%= favorite.title %></p>
-                <span class="star">&starf;</span>
                 <%= hidden_input f, :id, class: "input", value: favorite.id %>
-                <td class="todolistcheckbox"><%= submit "Submit", class: "checkbox" %></td>
+                <%= submit "★", class: "star-favorite" %>
               <% end %>
 
               </label>
@@ -41,4 +40,5 @@
     <% end %>
 
     </div>
+</div>
 
