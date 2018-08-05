@@ -10,4 +10,12 @@ defmodule ToDoListWeb.RecentView do
   def concatenate_name(name), do: NoteView.concatenate_name(name)
 
   def is_favorite(note), do: FavoriteView.is_favorite(note)
+
+  def is_private(conn) do
+    if conn |> Map.get(:assigns) |> Map.get(:current_user) == nil do
+      false
+    else
+      true
+    end
+  end
 end

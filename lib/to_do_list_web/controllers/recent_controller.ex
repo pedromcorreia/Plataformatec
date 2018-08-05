@@ -7,22 +7,36 @@ defmodule ToDoListWeb.RecentController do
   alias ToDoListWeb.Helpers
 
   def index(conn, _params) do
-    current_user_id = Helpers.current_user(conn)
-    notes =
-      Task.list_recent_notes()
-      |> Enum.map(fn(x) ->
-        is_favorite =
-          case Task.get_favorite_by_note_id_and_user_id(x.id, current_user_id) do
-            [] -> false
-              _ -> true
-          end
-        goals = Task.list_goals_by_note_id(x.id)
-        x
-        |> Map.put(:goals_total, Enum.count(goals))
-        |> Map.put(:is_favorite, is_favorite)
-      end)
+    current_user_id =
+      case Helpers.get_user(conn) do
+        nil ->
+          notes =
+            Task.list_recent_notes()
+            |> Enum.map(fn(x) ->
+              goals = Task.list_goals_by_note_id(x.id)
+              x
+              |> Map.put(:goals_total, Enum.count(goals))
+            end)
 
-    render(conn, "index.html", notes: notes)
+            render(conn, "index.html", notes: notes)
+        current_user_id ->
+          current_user_id
+          notes =
+            Task.list_recent_notes()
+            |> Enum.map(fn(x) ->
+              is_favorite =
+                case Task.get_favorite_by_note_id_and_user_id(x.id, current_user_id.id) do
+                  [] -> false
+                  _ -> true
+                end
+                goals = Task.list_goals_by_note_id(x.id)
+                x
+                |> Map.put(:goals_total, Enum.count(goals))
+                |> Map.put(:is_favorite, is_favorite)
+            end)
+
+            render(conn, "index.html", notes: notes)
+      end
   end
 
   def show(conn, %{"id" => id}) do

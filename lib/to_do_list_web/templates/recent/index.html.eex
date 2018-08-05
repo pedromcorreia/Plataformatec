@@ -9,17 +9,19 @@
   <%= for note <- @notes do %>
 
     <div class="column is-one-third">
-      <%= if note.is_favorite do %>
-        <%= form_for @conn, favorite_path(@conn, :delete, note), [method: :delete], fn f -> %>
-          <%= note.title %><span class="star-favorite">&starf;</span>
-          <%= hidden_input f, :id, class: "input", value: note.id %>
-          <td class="todolistcheckbox"><%= submit "Submit", class: "checkbox" %></td>
-        <% end %>
-      <% else %>
-        <%= form_for @conn, favorite_path(@conn, :create), fn f -> %>
-          <%= note.title %><span class="star">&#9734;</span>
-          <%= hidden_input f, :id, class: "input", value: note.id %>
-          <td class="todolistcheckbox"><%= submit "Submit", class: "checkbox" %></td>
+      <%= if is_private(@conn) do %>
+        <%= if note.is_favorite do %>
+          <%= form_for @conn, favorite_path(@conn, :delete, note), [method: :delete], fn f -> %>
+            <%= note.title %><span class="star-favorite">&starf;</span>
+            <%= hidden_input f, :id, class: "input", value: note.id %>
+            <td class="todolistcheckbox"><%= submit "Submit", class: "checkbox" %></td>
+          <% end %>
+        <% else %>
+          <%= form_for @conn, favorite_path(@conn, :create), fn f -> %>
+            <%= note.title %><span class="star">&#9734;</span>
+            <%= hidden_input f, :id, class: "input", value: note.id %>
+            <td class="todolistcheckbox"><%= submit "Submit", class: "checkbox" %></td>
+          <% end %>
         <% end %>
       <% end %>
 

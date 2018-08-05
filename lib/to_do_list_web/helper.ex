@@ -10,4 +10,10 @@ defmodule ToDoListWeb.Helpers do
     |> Map.get(:current_user)
     |> Map.get(:id)
   end
+
+  def get_user(conn) do
+    conn
+    |> Map.get(:assigns)
+    |> Map.get(:current_user)
+  end
 end
