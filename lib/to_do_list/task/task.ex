@@ -8,7 +8,7 @@ defmodule ToDoList.Task do
 
   alias ToDoList.Task.Note
   alias ToDoList.Coherence.User
-  alias ToDoList.User.List, as: Favorite
+  alias ToDoList.User.Note, as: Favorite
 
    @doc false
 
@@ -250,8 +250,10 @@ defmodule ToDoList.Task do
   end
 
   @doc false
-  def create_favorite([%Note{}] = note, user_id) do
-    IO.inspect Note
-
+  def create_favorite(attrs \\ %{}) do
+    %Favorite{}
+    |> Favorite.changeset(attrs)
+    |> Repo.insert()
+    |> IO.inspect
   end
 end

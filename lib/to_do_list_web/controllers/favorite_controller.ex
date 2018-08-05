@@ -23,7 +23,10 @@ defmodule ToDoListWeb.FavoriteController do
   def create(conn, %{"id" => id}) do
     notes = []
 
-    Task.create_favorite(Task.get_public_note(id), Helpers.current_user(conn))
+      Map.new()
+      |> Map.put(:note_id, Map.get(List.first(Task.get_public_note(id)),:id))
+      |> Map.put(:user_id, Helpers.current_user(conn))
+      |> Task.create_favorite()
     render(conn, "index.html", notes: notes)
   end
 end
