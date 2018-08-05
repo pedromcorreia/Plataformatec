@@ -1,12 +1,12 @@
 defmodule ToDoListWeb.FavoriteView do
   use ToDoListWeb, :view
-  alias ToDoListWeb.ListView
+  alias ToDoListWeb.NoteView
 
   alias ToDoListWeb.RecentView
 
-  def show_list(list), do: RecentView.show_list(list)
+  def show_note(note), do: RecentView.show_note(note)
 
-  def difference_date(list), do: ListView.difference_date(list)
+  def difference_date(note), do: NoteView.difference_date(note)
 
-  def concatenate_name(name), do: ListView.concatenate_name(name)
+  def concatenate_name(name), do: NoteView.concatenate_name(name)
 end

@@ -6,14 +6,14 @@ defmodule ToDoList.Task do
   import Ecto.Query, warn: false
   alias ToDoList.Repo
 
-  alias ToDoList.Task.List
+  alias ToDoList.Task.Note
   alias ToDoList.Coherence.User
   alias ToDoList.User.List, as: Favorite
 
    @doc false
 
-  def list_recent_lists do
-    List
+  def list_recent_notes do
+    Note
     |> limit(6)
     |> order_by(:inserted_at)
     |> where(type: "public")
@@ -22,16 +22,16 @@ defmodule ToDoList.Task do
   end
 
   @doc false
-  def list_lists_by_user_id(user_id, :public) do
-    List
+  def list_notes_by_user_id(user_id, :public) do
+    Note
     |> where([user_id: ^user_id, type: "public"])
     |> limit(6)
     |> order_by(desc: :inserted_at)
     |> Repo.all()
   end
 
-  def list_lists_by_user_id(user_id, _all) do
-    List
+  def list_notes_by_user_id(user_id, _all) do
+    Note
     |> where([user_id: ^user_id])
     |> limit(6)
     |> order_by(desc: :inserted_at)
@@ -40,116 +40,116 @@ defmodule ToDoList.Task do
 
   @doc false
 
-  def list_lists_by_user(%{"user_id" => user_id}) do
-    List
+  def list_notes_by_user(%{"user_id" => user_id}) do
+    Note
     |> where(user_id: ^user_id)
     |> preload(:user)
     |> Repo.all()
   end
 
   @doc """
-  Gets a single list.
+  Gets a single note.
 
-  Raises `Ecto.NoResultsError` if the List does not exist.
+  Raises `Ecto.NoResultsError` if the Note does not exist.
 
   ## Examples
 
-      iex> get_list!(123)
-      %List{}
+      iex> get_note!(123)
+      %Note{}
 
-      iex> get_list!(456)
+      iex> get_note!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_list!(id), do: Repo.get!(List, id)
+  def get_note!(id), do: Repo.get!(Note, id)
 
   @doc false
-  def get_public_list(id) do
-    List
+  def get_public_note(id) do
+    Note
     |> where([type: "public", id: ^id])
     |> Repo.all()
   end
 
   @doc """
-  Creates a list.
+  Creates a note.
 
   ## Examples
 
-      iex> create_list(%{field: value})
-      {:ok, %List{}}
+      iex> create_note(%{field: value})
+      {:ok, %Note{}}
 
-      iex> create_list(%{field: bad_value})
+      iex> create_note(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_list(attrs \\ %{}) do
-    %List{}
-    |> List.changeset(attrs)
+  def create_note(attrs \\ %{}) do
+    %Note{}
+    |> Note.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a list.
+  Updates a note.
 
   ## Examples
 
-      iex> update_list(list, %{field: new_value})
-      {:ok, %List{}}
+      iex> update_note(note, %{field: new_value})
+      {:ok, %Note{}}
 
-      iex> update_list(list, %{field: bad_value})
+      iex> update_note(note, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_list(%List{} = list, attrs) do
-    list
-    |> List.changeset(attrs)
+  def update_note(%Note{} = note, attrs) do
+    note
+    |> Note.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a List.
+  Deletes a Note.
 
   ## Examples
 
-      iex> delete_list(list)
-      {:ok, %List{}}
+      iex> delete_note(note)
+      {:ok, %Note{}}
 
-      iex> delete_list(list)
+      iex> delete_note(note)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_list(%List{} = list) do
-    Repo.delete(list)
+  def delete_note(%Note{} = note) do
+    Repo.delete(note)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking list changes.
+  Returns an `%Ecto.Changeset{}` for tracking note changes.
 
   ## Examples
 
-      iex> change_list(list)
-      %Ecto.Changeset{source: %List{}}
+      iex> change_note(note)
+      %Ecto.Changeset{source: %Note{}}
 
   """
-  def change_list(%List{} = list) do
-    List.changeset(list, %{})
+  def change_note(%Note{} = note) do
+    Note.changeset(note, %{})
   end
 
   alias ToDoList.Task.Goal
 
   @doc """
-  Returns the list of goals by list_id.
+  Returns the list of goals by note_id.
 
   ## Examples
 
-      iex> list_goals_by_list_id(4)
+      iex> list_goals_by_note_id(4)
       [%Goal{}, ...]
 
   """
 
-  def list_goals_by_list_id(list_id) do
+  def list_goals_by_note_id(note_id) do
     Goal
-    |> where(list_id: ^list_id)
+    |> where(note_id: ^note_id)
     |> limit(6)
     |> order_by(desc: :inserted_at)
     |> Repo.all()
@@ -250,8 +250,8 @@ defmodule ToDoList.Task do
   end
 
   @doc false
-  def create_favorite([%List{}] = list, user_id) do
-    IO.inspect list
+  def create_favorite([%Note{}] = note, user_id) do
+    IO.inspect Note
 
   end
 end

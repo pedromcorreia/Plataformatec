@@ -4,4 +4,4 @@
 <h2 class="subtitle">
   <%= gettext "A trip? A project? A User Story? Insert the name of your next big thing." %>
 </h2>
-<%= render "form.html", Map.put(assigns, :action, list_path(@conn, :create)) %>
+<%= render "form.html", Map.put(assigns, :action, note_path(@conn, :create)) %>

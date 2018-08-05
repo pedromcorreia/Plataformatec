@@ -1,9 +1,9 @@
 <h1 class="title has-text-left">
-  <u><%= @list.title %></u>
+  <u><%= @note.title %></u>
 </h1>
 <h2 class="subtitle has-text-left">
   by @<%= concatenate_name(@user.name) %> - Created
-  <%= Timex.diff(Timex.now, @list.inserted_at, :hours) %>
+  <%= Timex.diff(Timex.now, @note.inserted_at, :hours) %>
   hours ago
 </h2>
 

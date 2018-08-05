@@ -1,12 +1,12 @@
-defmodule ToDoListWeb.ListView do
+defmodule ToDoListWeb.NoteView do
   use ToDoListWeb, :view
 
-  def show_list(list), do: "lists/" <> to_string(Map.get(list, :id))
+  def show_note(note), do: "notes/" <> to_string(Map.get(note, :id))
 
   def status_goal(goal), do: if (Map.get(goal, :status) == "done"), do: "-done"
 
-  def difference_date(list) do
-    difference_time = Timex.diff(Timex.now, list.inserted_at, :seconds)
+  def difference_date(note) do
+    difference_time = Timex.diff(Timex.now, note.inserted_at, :seconds)
 
     cond do
       difference_time < 60 ->

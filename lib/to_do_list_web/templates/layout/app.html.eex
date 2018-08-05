@@ -19,7 +19,7 @@
             <%= if get_user(@conn) == nil do %>
               <a class="navbar-item" href="/sessions/new">Sign in</a>
             <% else %>
-              <a class="navbar-item" href="/lists">My To-Do-Lists</a>
+              <a class="navbar-item" href="/notes">My To-Do-Lists</a>
               <a class="navbar-item" href="/favorites">Favorites</a>
               <a class="navbar-item" href="/recents">Recent lists</a>
               <a class="navbar-item" href="/registrations/edit">Account</a>

@@ -1,6 +1,8 @@
 <h1 class="title has-text-left">
-  <u>@<%= concatenate_name(@user.name) %></u>
+  <u>My To-Do-List</u>
 </h1>
+
+<%= link "Create new", to: note_path(@conn, :new), class: "button" %>
 
 <div class="columns is-multiline">
 
@@ -10,7 +12,7 @@
       <a href="<%= show_note(note) %>">
         <div class="box">
           <label class="label"><%= note.title %></label>
-          <label class="label"><%= difference_date(note) %> - <%= note.goals_total %> tasks</label>
+          <label class="label"><%= difference_date(note) %> - <%= note.goals_total %>/<%= note.goals_done %> tasks</label>
         </div>
       </a>
     </div>

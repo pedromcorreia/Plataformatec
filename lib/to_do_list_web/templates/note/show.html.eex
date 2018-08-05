@@ -1,9 +1,9 @@
 <h1 class="title has-text-left">
-  <u><%= @list.title %></u>
+  <u><%= @note.title %></u>
 </h1>
 <h2 class="subtitle has-text-left">
   by @<%= concatenate_name(@user.name) %> - Created
-  <%= Timex.diff(Timex.now, @list.inserted_at, :hours) %>
+  <%= Timex.diff(Timex.now, @note.inserted_at, :hours) %>
   hours ago
 </h2>
 
@@ -15,7 +15,7 @@
     <%= error_tag f, :description %>
   </div>
 
-  <%= hidden_input f, :list_id, class: "input", value: @list.id %>
+  <%= hidden_input f, :note_id, class: "input", value: @note.id %>
 <% end %>
 
 <table class="table is-fullwidth">
@@ -36,4 +36,4 @@
   </tbody>
 </table>
 
-<span><%= link "Delete List", to: list_path(@conn, :delete, @list), method: :delete, data: [confirm: "Are you sure?"], class: "button is-danger" %></span>
+<span><%= link "Delete Note", to: note_path(@conn, :delete, @note), method: :delete, data: [confirm: "Are you sure?"], class: "button is-danger" %></span>

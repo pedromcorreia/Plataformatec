@@ -46,7 +46,7 @@ defmodule ToDoListWeb.Router do
   scope "/", ToDoListWeb do
     pipe_through :protected
 
-    resources "/lists", ListController
+    resources "/notes", NoteController
     resources "/goals", GoalController
     resources "/favorites", FavoriteController, only: [:index, :create]
     resources "/recents", RecentController, only: [:index, :show]

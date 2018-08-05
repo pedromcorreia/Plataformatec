@@ -5,11 +5,11 @@ defmodule ToDoList.Repo.Migrations.CreateGoals do
     create table(:goals) do
       add :description, :string
       add :status, :string
-      add :list_id, references(:lists, on_delete: :nothing)
+      add :note_id, references(:notes, on_delete: :delete_all)
 
       timestamps()
     end
 
-    create index(:goals, [:list_id])
+    create index(:goals, [:note_id])
   end
 end
