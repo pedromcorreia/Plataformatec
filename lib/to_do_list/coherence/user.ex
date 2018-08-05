@@ -17,6 +17,7 @@ defmodule ToDoList.Coherence.User do
     |> validate_required([:name, :email])
     |> validate_format(:email, ~r/@/)
     |> unique_constraint(:email)
+    |> unique_constraint(:name)
     |> validate_coherence(params)
   end
 

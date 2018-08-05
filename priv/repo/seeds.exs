@@ -17,3 +17,18 @@ ToDoList.Coherence.User.changeset(%ToDoList.Coherence.User{}, %{name: "Test User
 
 ToDoList.Coherence.User.changeset(%ToDoList.Coherence.User{}, %{name: "basic", email: "basic@mail.com", password: "1234", password_confirmation: "1234"})
 |> ToDoList.Repo.insert!
+
+ToDoList.Task.Note.changeset(%ToDoList.Task.Note{}, %{title: "Chocolate cookie", type: "public", user_id: 1})
+|> ToDoList.Repo.insert!
+
+ToDoList.Task.Note.changeset(%ToDoList.Task.Note{}, %{title: "How to get away with murder", type: "public", user_id: 1})
+|> ToDoList.Repo.insert!
+
+ToDoList.Task.Note.changeset(%ToDoList.Task.Note{}, %{title: "Basic guitar", type: "private", user_id: 1})
+|> ToDoList.Repo.insert!
+
+ToDoList.Task.Note.changeset(%ToDoList.Task.Note{}, %{title: "Simple cookie", type: "public", user_id: 2})
+|> ToDoList.Repo.insert!
+
+ToDoList.Task.Note.changeset(%ToDoList.Task.Note{}, %{title: "How i meet your mother", type: "public", user_id: 2})
+|> ToDoList.Repo.insert!

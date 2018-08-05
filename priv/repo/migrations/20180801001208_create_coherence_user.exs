@@ -25,6 +25,7 @@ defmodule ToDoList.Repo.Migrations.CreateCoherenceUser do
       timestamps()
     end
     create unique_index(:users, [:email])
+    create unique_index(:users, [:name])
 
   end
 end
