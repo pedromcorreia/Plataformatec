@@ -61,7 +61,11 @@ defmodule ToDoList.Task do
       ** (Ecto.NoResultsError)
 
   """
-  def get_note!(id), do: Repo.get!(Note, id)
+  def get_note!(id) do
+    Note
+    |> preload(:user)
+    |> Repo.get!(id)
+  end
 
   @doc false
   def get_public_note(id) do
@@ -254,6 +258,25 @@ defmodule ToDoList.Task do
     %Favorite{}
     |> Favorite.changeset(attrs)
     |> Repo.insert()
-    |> IO.inspect
+  end
+
+  @doc false
+  def list_favorite_by_user_id(%{"user_id" => user_id}) do
+    Favorite
+    |> where([user_id: ^user_id])
+    |> limit(6)
+    |> order_by(desc: :inserted_at)
+    |> Repo.all()
+  end
+
+  @doc false
+  def get_favorite_by_note_id_and_user_id(note_id, user_id) do
+    Favorite
+    |> where([note_id: ^note_id, user_id: ^user_id])
+    |> Repo.all()
+  end
+
+  def delete_favorite(%Favorite{} = favorite) do
+    Repo.delete(favorite)
   end
 end

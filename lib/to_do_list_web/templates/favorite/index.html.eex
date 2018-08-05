@@ -6,20 +6,22 @@
 
 <div class="columns is-multiline">
 
-  <%= for note <- @notes do %>
+  <%= for favorite <- @favorites do %>
 
     <div class="column is-one-third">
       <label class="label">
-        <%= form_for @conn, favorite_path(@conn, :create), fn f -> %>
-          <%= note.title %><span class="star">&starf;</span>
-          <%= hidden_input f, :id, class: "input", value: note.id %>
+
+        <%= form_for @conn, favorite_path(@conn, :delete, favorite), [method: :delete], fn f -> %>
+          <%= favorite.title %><span class="star">&starf;</span>
+          <%= hidden_input f, :id, class: "input", value: favorite.id %>
         <td class="todolistcheckbox"><%= submit "Submit", class: "checkbox" %></td>
         <% end %>
+
       </label>
-      <a href="<%= show_note(note) %>">
+      <a href="<%= show_note(favorite) %>">
         <div class="box">
-          <label class="label"><a href="/users/<%=note.user.id %>">by @<%= concatenate_name(note.user.name) %></a></label>
-          <label class="label"><%= difference_date(note) %> - <%= note.goals_total %> tasks</label>
+          <label class="label"><a href="/users/<%=favorite.user.id %>">by @<%= concatenate_name(favorite.user.name) %></a></label>
+          <label class="label"><%= difference_date(favorite) %> - <%= favorite.goals_total %> tasks</label>
         </div>
       </a>
     </div>
