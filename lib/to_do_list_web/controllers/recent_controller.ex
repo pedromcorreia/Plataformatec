@@ -16,4 +16,19 @@ defmodule ToDoListWeb.RecentController do
 
     render(conn, "index.html", lists: lists)
   end
+
+  def show(conn, %{"id" => id}) do
+    case Task.get_public_list(id) do
+      [%List{}] = list ->
+        [list] = list
+        goals = Task.list_goals_by_list_id(list.id)
+        user = Schemas.get_user(list.user_id)
+        changeset = Task.change_goal(%Goal{})
+        render(conn, "show.html", changeset: changeset, list: list, user: user, goals: goals)
+      _ ->
+        conn
+        |> send_resp(404, "Not found")
+        |> halt()
+    end
+  end
 end

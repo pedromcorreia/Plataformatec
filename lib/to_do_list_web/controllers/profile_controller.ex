@@ -9,18 +9,12 @@ defmodule ToDoListWeb.ProfileController do
   def show(conn, %{"id" => id}) do
     case Schemas.get_user(id) do
       %User{} = user ->
-        current_user =
-          conn
-          |> Map.get(:assigns)
-          |> Map.get(:current_user)
-          |> Map.get(:id)
-
-          list =
-            if current_user == id do
-              get_list(id)
-            else
-              get_list(id, :public)
-            end
+        list =
+          if Helpers.current_user(conn) == id do
+            get_list(id)
+          else
+            get_list(id, :public)
+          end
 
           changeset = Task.change_goal(%Goal{})
           render(conn, "show.html", changeset: changeset, lists: list, user: user)

@@ -2,7 +2,7 @@ defmodule ToDoListWeb.RecentView do
   use ToDoListWeb, :view
   alias ToDoListWeb.ListView
 
-  def show_list(list), do: ListView.show_list(list)
+  def show_list(list), do: "recents/" <> to_string(Map.get(list, :id))
 
   def difference_date(list), do: ListView.difference_date(list)
 

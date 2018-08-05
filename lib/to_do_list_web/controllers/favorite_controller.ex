@@ -19,4 +19,11 @@ defmodule ToDoListWeb.FavoriteController do
 
     render(conn, "index.html", lists: lists)
   end
+
+  def create(conn, %{"id" => id}) do
+    lists = []
+
+    Task.create_favorite(Task.get_public_list(id), Helpers.current_user(conn))
+    render(conn, "index.html", lists: lists)
+  end
 end

@@ -9,9 +9,15 @@
   <%= for list <- @lists do %>
 
     <div class="column is-one-third">
+      <label class="label">
+        <%= form_for @conn, favorite_path(@conn, :create), fn f -> %>
+          <%= list.title %><span class="star">&starf;</span>
+          <%= hidden_input f, :id, class: "input", value: list.id %>
+        <td class="todolistcheckbox"><%= submit "Submit", class: "checkbox" %></td>
+        <% end %>
+      </label>
       <a href="<%= show_list(list) %>">
         <div class="box">
-          <label class="label"><%= list.title %></label>
           <label class="label"><a href="/users/<%=list.user.id %>">by @<%= concatenate_name(list.user.name) %></a></label>
           <label class="label"><%= difference_date(list) %> - <%= list.goals_total %> tasks</label>
         </div>

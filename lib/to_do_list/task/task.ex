@@ -7,6 +7,8 @@ defmodule ToDoList.Task do
   alias ToDoList.Repo
 
   alias ToDoList.Task.List
+  alias ToDoList.Coherence.User
+  alias ToDoList.User.List, as: Favorite
 
    @doc false
 
@@ -60,6 +62,13 @@ defmodule ToDoList.Task do
 
   """
   def get_list!(id), do: Repo.get!(List, id)
+
+  @doc false
+  def get_public_list(id) do
+    List
+    |> where([type: "public", id: ^id])
+    |> Repo.all()
+  end
 
   @doc """
   Creates a list.
@@ -238,5 +247,11 @@ defmodule ToDoList.Task do
   """
   def change_goal(%Goal{} = goal) do
     Goal.changeset(goal, %{})
+  end
+
+  @doc false
+  def create_favorite([%List{}] = list, user_id) do
+    IO.inspect list
+
   end
 end
