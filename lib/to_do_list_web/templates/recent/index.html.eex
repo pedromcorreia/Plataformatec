@@ -1,39 +1,50 @@
-<h1 class="title has-text-left">
-  <u>Recent created notes</u>
-</h1>
+<div class="box">
+  <div class="field has-addons">
+    <div class="control is-expanded">
+      <h1 class="title has-text-left">
+        Recent created notes
+      </h1>
+    </div>
 
-<%= link "Create new", to: note_path(@conn, :new), class: "button" %>
+  </div>
+</div>
 
-<div class="columns is-multiline">
+<div class="row columns is-multiline">
 
   <%= for note <- @notes do %>
 
     <div class="column is-one-third">
-      <%= if is_private(@conn) do %>
-        <%= if note.is_favorite do %>
-          <%= form_for @conn, favorite_path(@conn, :delete, note), [method: :delete], fn f -> %>
-            <%= note.title %><span class="star-favorite">&starf;</span>
-            <%= hidden_input f, :id, class: "input", value: note.id %>
-            <td class="todolistcheckbox"><%= submit "Submit", class: "checkbox" %></td>
-          <% end %>
-        <% else %>
-          <%= form_for @conn, favorite_path(@conn, :create), fn f -> %>
-            <%= note.title %><span class="star">&#9734;</span>
-            <%= hidden_input f, :id, class: "input", value: note.id %>
-            <td class="todolistcheckbox"><%= submit "Submit", class: "checkbox" %></td>
-          <% end %>
-        <% end %>
-      <% end %>
+      <div class="card large">
 
-      <a href="<%= show_note(note) %>">
-        <div class="box">
-          <label class="label">
-            <%= note.title %><span class="star">&starf;</span>
-          </label>
-          <label class="label"><a href="/profiles/<%=note.user.id %>">by @<%= concatenate_name(note.user.name) %></a></label>
-          <label class="label"><%= difference_date(note) %> - <%= note.goals_total %> tasks</label>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-content">
+              <%= if is_private(@conn) do %>
+                <%= if note.is_favorite do %>
+                  <%= form_for @conn, favorite_path(@conn, :delete, note), [method: :delete], fn f -> %>
+                    <span class="star-favorite">&starf;</span>
+                    <%= hidden_input f, :id, class: "input", value: note.id %>
+                    <td class="todolistcheckbox"><%= submit "Submit", class: "checkbox" %></td>
+                  <% end %>
+                <% else %>
+                  <%= form_for @conn, favorite_path(@conn, :create), fn f -> %>
+                    <span class="star">&#9734;</span>
+                    <%= hidden_input f, :id, class: "input", value: note.id %>
+                    <td class="todolistcheckbox"><%= submit "Submit", class: "checkbox" %></td>
+                  <% end %>
+                <% end %>
+              <% end %>
+
+              <a href="<%= show_note(note) %>">
+                <p class="title is-4 no-padding"><%= note.title %></p>
+
+                <p><span class="title is-6"><a href="/profiles/<%=note.user.id %>">@<%=note.user.name %></a></span></p>
+                <p class="subtitle is-6"><%= difference_date(note) %> - <%= note.goals_total %> tasks</p>
+              </a>
+            </div>
+          </div>
         </div>
-      </a>
+      </div>
     </div>
   <% end %>
 

@@ -1,31 +1,44 @@
-<h1 class="title has-text-left">
-  <u>My To-Do-List</u>
-</h1>
+<div class="box">
+  <div class="field has-addons">
+    <div class="control is-expanded">
+      <h1 class="title has-text-left">
+        My To-Do-List
+      </h1>
+    </div>
+    <div class="control">
+      <%= link "Create new", to: note_path(@conn, :new), class: "button is-info" %>
+    </div>
+  </div>
+</div>
 
-<%= link "Create new", to: note_path(@conn, :new), class: "button" %>
-
-<div class="columns is-multiline">
-
+<div class="row columns">
   <%= for favorite <- @favorites do %>
 
     <div class="column is-one-third">
-      <label class="label">
+      <div class="card large">
 
-        <%= form_for @conn, favorite_path(@conn, :delete, favorite), [method: :delete], fn f -> %>
-          <%= favorite.title %><span class="star">&starf;</span>
-          <%= hidden_input f, :id, class: "input", value: favorite.id %>
-        <td class="todolistcheckbox"><%= submit "Submit", class: "checkbox" %></td>
-        <% end %>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-content">
 
-      </label>
-      <a href="<%= show_note(favorite) %>">
-        <div class="box">
-          <label class="label"><a href="/users/<%=favorite.user.id %>">by @<%= concatenate_name(favorite.user.name) %></a></label>
-          <label class="label"><%= difference_date(favorite) %> - <%= favorite.goals_total %> tasks</label>
+              <%= form_for @conn, favorite_path(@conn, :delete, favorite), [method: :delete], fn f -> %>
+
+                <p class="title is-4 no-padding"><%= favorite.title %></p>
+                <span class="star">&starf;</span>
+                <%= hidden_input f, :id, class: "input", value: favorite.id %>
+                <td class="todolistcheckbox"><%= submit "Submit", class: "checkbox" %></td>
+              <% end %>
+
+              </label>
+              <a href="<%= show_note(favorite) %>">
+                <p><span class="title is-6"><a href="/profiles/<%=favorite.user.id %>">by @<%= concatenate_name(favorite.user.name) %></a></p>
+                <p class="subtitle is-6"><%= difference_date(favorite) %> - <%= favorite.goals_total %> tasks</p>
+              </a>
+            </div>
+          </div>
         </div>
-      </a>
-    </div>
-  <% end %>
+      </div>
+    <% end %>
 
-</div>
+    </div>
 

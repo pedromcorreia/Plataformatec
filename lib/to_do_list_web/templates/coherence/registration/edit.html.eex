@@ -1,4 +1,13 @@
-<h3><%= dgettext "coherence", "Edit Account" %></h3>
+<div class="box">
+  <div class="field has-addons">
+    <div class="control is-expanded">
+      <h1 class="title has-text-left">
+        <%= dgettext "coherence", "Edit Account" %>
+      </h1>
+    </div>
+
+  </div>
+</div>
 
 <%= form_for @changeset, registration_path(@conn, :update), [as: :registration], fn f  -> %>
 
