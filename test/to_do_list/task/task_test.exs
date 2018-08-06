@@ -202,8 +202,6 @@ defmodule ToDoList.TaskTest do
     alias ToDoList.User.Note, as: Favorite
 
     @valid_attrs %{description: "some description", status: "some status", title: "Some title", type: "public"}
-    @update_attrs %{description: "some updated description", status: "some updated status", type: "public"}
-    @invalid_attrs %{description: nil, status: nil}
 
     def favorite_fixture(attrs \\ %{}) do
       user = user_fixture()
@@ -235,18 +233,19 @@ defmodule ToDoList.TaskTest do
     test "get_favorite_by_note_id_and_user_id/2 list favorite by user_id and note_id" do
       favorite = favorite_fixture()
       {:ok, %Favorite{} = favorite_created} = Task.create_favorite(favorite)
-      assert favorite_created ==
-        Task.get_favorite_by_note_id_and_user_id(
+      get_favorite = Task.get_favorite_by_note_id_and_user_id(
           favorite.note_id,
           favorite.user_id
         )
+      assert favorite_created == get_favorite |> List.first
+      
     end
 
     test "delete_favorite/1 delete favorite" do
       favorite = favorite_fixture()
       {:ok, %Favorite{} = favorite_created} = Task.create_favorite(favorite)
-      assert {:ok, favorite_created} ==
-        Task.delete_favorite(favorite_created)
+      {:ok, deleted} = Task.delete_favorite(favorite_created)
+      assert favorite_created |> Map.get(:id) == deleted |> Map.get(:id)
     end
   end
 end
