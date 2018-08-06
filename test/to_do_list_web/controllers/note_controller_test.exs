@@ -17,7 +17,7 @@ defmodule ToDoListWeb.NoteControllerTest do
       conn = get conn, note_path(conn, :index)
       assert html_response(conn, 302) =~ "redirected"
 
-      conn = conn |> authenticate() |> get note_path(conn, :index)
+      conn = conn |> authenticate() |> get(note_path(conn, :index))
       assert html_response(conn, 200) =~ "Listing Notes"
     end
   end
