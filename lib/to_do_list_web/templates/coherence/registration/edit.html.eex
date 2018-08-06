@@ -37,6 +37,11 @@
     <%= error_tag f, :email %>
   </div>
 
+  <div class="field">
+    <%= required_label f, dgettext("coherence", "Current password"), class: "label" %>
+    <%= password_input f, :current_password, [class: "input"] ++ [] %>
+    <%= error_tag f, :current_password %>
+  </div>
 
   <div class="field">
     <%= required_label f, dgettext("coherence", "Password"), class: "label" %>
