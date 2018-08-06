@@ -3,8 +3,7 @@ defmodule ToDoListWeb.NoteControllerTest do
 
   alias ToDoList.Task
 
-  @create_attrs %{title: "some title", type: "some type", user_id: 1}
-  @update_attrs %{title: "some updated title", type: "some updated type", user_id: 1}
+  @create_attrs %{title: "some title", type: "some type"}
   @invalid_attrs %{title: nil, type: nil}
 
   def fixture(:note) do
@@ -13,62 +12,45 @@ defmodule ToDoListWeb.NoteControllerTest do
   end
 
   describe "index" do
-    test "lists all notes", %{conn: conn} do
+    test "redirect to /", %{conn: conn} do
       conn = get conn, note_path(conn, :index)
-      assert html_response(conn, 302) =~ "redirected"
+      assert redirected_to(conn) == "/"
+    end
 
+    test "list all notes", %{conn: conn} do
       conn = conn |> authenticate() |> get(note_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Notes"
+      assert html_response(conn, 200) =~ "My To-Do-List"
     end
   end
 
   describe "new note" do
+    test "redirect to /", %{conn: conn} do
+        conn = get conn, note_path(conn, :new)
+      assert redirected_to(conn) == "/"
+    end
+
     test "renders form", %{conn: conn} do
-      conn = get conn, note_path(conn, :new)
-      assert html_response(conn, 200) =~ "New Note"
+      conn = conn |> authenticate() |> get(note_path(conn, :new))
+      assert html_response(conn, 200) =~ "Create a To-Do-List"
     end
   end
 
   describe "create note" do
+    test "redirect to /", %{conn: conn} do
+        conn = get conn, note_path(conn, :create)
+      assert redirected_to(conn) == "/"
+    end
+
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post conn, note_path(conn, :create), note: @create_attrs
+      conn = conn |> authenticate() |> post(note_path(conn, :create), note: @create_attrs)
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == note_path(conn, :show, id)
-
-      conn = get conn, note_path(conn, :show, id)
-      assert html_response(conn, 200) =~ "Show Note"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, note_path(conn, :create), note: @invalid_attrs
-      assert html_response(conn, 200) =~ "New Note"
-    end
-  end
-
-  describe "edit note" do
-    setup [:create_note]
-
-    test "renders form for editing chosen note", %{conn: conn, note: note} do
-      conn = get conn, note_path(conn, :edit, note)
-      assert html_response(conn, 200) =~ "Edit Note"
-    end
-  end
-
-  describe "update note" do
-    setup [:create_note]
-
-    test "redirects when data is valid", %{conn: conn, note: note} do
-      conn = put conn, note_path(conn, :update, note), note: @update_attrs
-      assert redirected_to(conn) == note_path(conn, :show, note)
-
-      conn = get conn, note_path(conn, :show, note)
-      assert html_response(conn, 200) =~ "some updated title"
-    end
-
-    test "renders errors when data is invalid", %{conn: conn, note: note} do
-      conn = put conn, note_path(conn, :update, note), note: @invalid_attrs
-      assert html_response(conn, 200) =~ "Edit Note"
+      conn = conn |> authenticate() |> post(note_path(conn, :create), note: @invalid_attrs)
+      assert html_response(conn, 200) =~ "Oops, something went wrong! Please check the errors below."
     end
   end
 
@@ -76,7 +58,7 @@ defmodule ToDoListWeb.NoteControllerTest do
     setup [:create_note]
 
     test "deletes chosen note", %{conn: conn, note: note} do
-      conn = delete conn, note_path(conn, :delete, note)
+    conn = conn() |> authenticate() |> delete(note_path(conn, :delete, note))
       assert redirected_to(conn) == note_path(conn, :index)
       assert_error_sent 404, fn ->
         get conn, note_path(conn, :show, note)

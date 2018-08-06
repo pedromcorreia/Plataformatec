@@ -55,19 +55,6 @@ defmodule ToDoListWeb.NoteController do
     end
   end
 
-  def update(conn, %{"id" => id, "note" => note_params}) do
-    note = Task.get_note!(id)
-
-    case Task.update_note(note, note_params) do
-      {:ok, note} ->
-        conn
-        |> put_flash(:info, "Note updated successfully.")
-        |> redirect(to: note_path(conn, :show, note))
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", note: note, changeset: changeset)
-    end
-  end
-
   def delete(conn, %{"id" => id}) do
     note = Task.get_note!(id)
     {:ok, _note} = Task.delete_note(note)

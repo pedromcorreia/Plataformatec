@@ -22,7 +22,7 @@ defmodule ToDoList.Mixfile do
   def application do
     [
       mod: {ToDoList.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :coherence]
     ]
   end
 

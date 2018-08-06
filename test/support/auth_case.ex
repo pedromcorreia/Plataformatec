@@ -1,14 +1,11 @@
-defmodule SimulatorWeb.AuthCase do
+defmodule ToDoListWeb.AuthCase do
   @moduledoc """
   """
-  def authenticate(conn)
-
   def authenticate(%Plug.Conn{} = conn) do
     authenticate(Faker.Name.name(), Faker.Internet.email(), conn)
   end
 
   def authenticate(name, email, %Plug.Conn{} = conn) do
-
     %ToDoList.Coherence.User{}
     |> ToDoList.Coherence.User.changeset(%{
       name: name,
