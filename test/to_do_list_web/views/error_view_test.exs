@@ -6,7 +6,7 @@ defmodule ToDoListWeb.ErrorViewTest do
 
   test "renders 404.html" do
     assert render_to_string(ToDoListWeb.ErrorView, "404.html", []) ==
-           "Not Found"
+           "Page not found"
   end
 
   test "renders 500.html" do
