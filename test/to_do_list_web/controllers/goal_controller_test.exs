@@ -12,14 +12,10 @@ defmodule ToDoListWeb.GoalControllerTest do
   end
 
   describe "create goal" do
-    test "redirect to /", %{conn: conn} do
-        conn = get conn, goal_path(conn, :create)
-      assert redirected_to(conn) == "/"
-    end
 
     test "redirects to show when data is valid", %{conn: conn} do
       note_id = insert!(:note) |> Map.get(:id)
-     goal = %{description: "some description", status: "some status", note_id: note_id}
+      goal = %{description: "some description", status: "some status", note_id: note_id}
       conn = conn |> authenticate() |> post(goal_path(conn, :create), goal: goal)
 
       assert %{id: _id} = redirected_params(conn)
@@ -34,18 +30,6 @@ defmodule ToDoListWeb.GoalControllerTest do
       conn = conn() |> authenticate() |>  put(goal_path(conn, :update, goal), goal: @invalid_attrs)
       assert_error_sent 404, fn ->
         get conn, goal_path(conn, :update, goal)
-      end
-    end
-  end
-
-  describe "delete goal" do
-    setup [:create_goal]
-
-    test "deletes chosen goal", %{conn: conn, goal: goal} do
-      conn = conn() |> authenticate() |> delete(goal_path(conn, :delete, goal))
-      assert redirected_to(conn) == goal_path(conn, :index)
-      assert_error_sent 404, fn ->
-        get conn, goal_path(conn, :show, goal)
       end
     end
   end

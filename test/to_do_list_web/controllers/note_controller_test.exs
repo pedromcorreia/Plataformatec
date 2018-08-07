@@ -25,7 +25,7 @@ defmodule ToDoListWeb.NoteControllerTest do
 
   describe "new note" do
     test "redirect to /", %{conn: conn} do
-        conn = get conn, note_path(conn, :new)
+      conn = get conn, note_path(conn, :new)
       assert redirected_to(conn) == "/"
     end
 
@@ -37,7 +37,7 @@ defmodule ToDoListWeb.NoteControllerTest do
 
   describe "create note" do
     test "redirect to /", %{conn: conn} do
-        conn = get conn, note_path(conn, :create)
+      conn = get conn, note_path(conn, :create)
       assert redirected_to(conn) == "/"
     end
 
@@ -54,29 +54,29 @@ defmodule ToDoListWeb.NoteControllerTest do
     end
   end
 
+  describe "show note" do
+
+    setup [:create_note]
+
+    test "redirect to /", %{conn: conn, note: note} do
+      conn = get conn, note_path(conn, :show, note)
+      assert redirected_to(conn) == "/"
+    end
+  end
+
+
+
   describe "delete note" do
     setup [:create_note]
 
     test "deletes chosen note", %{conn: conn, note: note} do
-    conn = conn() |> delete(note_path(conn, :delete, note))
+      conn = conn() |> authenticate() |> delete(note_path(conn, :delete, note))
       assert redirected_to(conn) == note_path(conn, :index)
-      assert_error_sent 404, fn ->
-        get conn, note_path(conn, :show, note)
-      end
     end
   end
 
-  defp create_note(conn) do
-    user_id =
-      %ToDoList.Coherence.User{}
-      |> ToDoList.Coherence.User.changeset(%{
-        name: Faker.Name.name,
-        email: Faker.Internet.email,
-        password: "secret",
-        password_confirmation: "secret"
-      })
-      |> ToDoList.Repo.insert!()
-      |> Map.get(:id)
-    {:ok, note} = Task.create_note(Map.put(@create_attrs, :user_id, user_id))
+  defp create_note(_conn) do
+    note = insert!(:note)
+    {:ok, note: note}
   end
 end
