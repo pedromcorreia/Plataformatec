@@ -3,7 +3,7 @@ defmodule ToDoListWeb.NoteControllerTest do
 
   alias ToDoList.Task
 
-  @create_attrs %{title: "some title", type: "some type"}
+  @create_attrs %{title: "some title", type: "some type", user_id: 1}
   @invalid_attrs %{title: nil, type: nil}
 
   def fixture(:note) do
@@ -58,7 +58,7 @@ defmodule ToDoListWeb.NoteControllerTest do
     setup [:create_note]
 
     test "deletes chosen note", %{conn: conn, note: note} do
-    conn = conn() |> authenticate() |> delete(note_path(conn, :delete, note))
+    conn = conn() |> delete(note_path(conn, :delete, note))
       assert redirected_to(conn) == note_path(conn, :index)
       assert_error_sent 404, fn ->
         get conn, note_path(conn, :show, note)
@@ -66,8 +66,17 @@ defmodule ToDoListWeb.NoteControllerTest do
     end
   end
 
-  defp create_note(_) do
-    note = fixture(:note)
-    {:ok, note: note}
+  defp create_note(conn) do
+    user_id =
+      %ToDoList.Coherence.User{}
+      |> ToDoList.Coherence.User.changeset(%{
+        name: Faker.Name.name,
+        email: Faker.Internet.email,
+        password: "secret",
+        password_confirmation: "secret"
+      })
+      |> ToDoList.Repo.insert!()
+      |> Map.get(:id)
+    {:ok, note} = Task.create_note(Map.put(@create_attrs, :user_id, user_id))
   end
 end

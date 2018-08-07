@@ -3,8 +3,7 @@ defmodule ToDoListWeb.GoalControllerTest do
 
   alias ToDoList.Task
 
-  @create_attrs %{description: "some description", status: "some status"}
-  @update_attrs %{description: "some updated description", status: "some updated status"}
+  @create_attrs %{description: "some description", status: "some status", note_id: 1}
   @invalid_attrs %{description: nil, status: nil}
 
   def fixture(:goal) do
@@ -12,60 +11,30 @@ defmodule ToDoListWeb.GoalControllerTest do
     goal
   end
 
-  describe "index" do
-    test "lists all goals", %{conn: conn} do
-      conn = get conn, goal_path(conn, :index)
-      assert html_response(conn, 200) =~ "Listing Goals"
-    end
-  end
-
-  describe "new goal" do
-    test "renders form", %{conn: conn} do
-      conn = get conn, goal_path(conn, :new)
-      assert html_response(conn, 200) =~ "New Goal"
-    end
-  end
-
   describe "create goal" do
+    test "redirect to /", %{conn: conn} do
+        conn = get conn, goal_path(conn, :create)
+      assert redirected_to(conn) == "/"
+    end
+
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post conn, goal_path(conn, :create), goal: @create_attrs
+      note_id = insert!(:note) |> Map.get(:id)
+     goal = %{description: "some description", status: "some status", note_id: note_id}
+      conn = conn |> authenticate() |> post(goal_path(conn, :create), goal: goal)
 
-      assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == goal_path(conn, :show, id)
-
-      conn = get conn, goal_path(conn, :show, id)
-      assert html_response(conn, 200) =~ "Show Goal"
-    end
-
-    test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, goal_path(conn, :create), goal: @invalid_attrs
-      assert html_response(conn, 200) =~ "New Goal"
-    end
-  end
-
-  describe "edit goal" do
-    setup [:create_goal]
-
-    test "renders form for editing chosen goal", %{conn: conn, goal: goal} do
-      conn = get conn, goal_path(conn, :edit, goal)
-      assert html_response(conn, 200) =~ "Edit Goal"
+      assert %{id: _id} = redirected_params(conn)
+      assert redirected_to(conn) == "/notes/#{note_id}"
     end
   end
 
   describe "update goal" do
     setup [:create_goal]
 
-    test "redirects when data is valid", %{conn: conn, goal: goal} do
-      conn = put conn, goal_path(conn, :update, goal), goal: @update_attrs
-      assert redirected_to(conn) == goal_path(conn, :show, goal)
-
-      conn = get conn, goal_path(conn, :show, goal)
-      assert html_response(conn, 200) =~ "some updated description"
-    end
-
     test "renders errors when data is invalid", %{conn: conn, goal: goal} do
-      conn = put conn, goal_path(conn, :update, goal), goal: @invalid_attrs
-      assert html_response(conn, 200) =~ "Edit Goal"
+      conn = conn() |> authenticate() |>  put(goal_path(conn, :update, goal), goal: @invalid_attrs)
+      assert_error_sent 404, fn ->
+        get conn, goal_path(conn, :update, goal)
+      end
     end
   end
 
@@ -73,7 +42,7 @@ defmodule ToDoListWeb.GoalControllerTest do
     setup [:create_goal]
 
     test "deletes chosen goal", %{conn: conn, goal: goal} do
-      conn = delete conn, goal_path(conn, :delete, goal)
+      conn = conn() |> authenticate() |> delete(goal_path(conn, :delete, goal))
       assert redirected_to(conn) == goal_path(conn, :index)
       assert_error_sent 404, fn ->
         get conn, goal_path(conn, :show, goal)
@@ -82,7 +51,7 @@ defmodule ToDoListWeb.GoalControllerTest do
   end
 
   defp create_goal(_) do
-    goal = fixture(:goal)
+    goal = insert!(:goal)
     {:ok, goal: goal}
   end
 end

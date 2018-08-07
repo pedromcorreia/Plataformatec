@@ -21,6 +21,7 @@ defmodule ToDoListWeb.ConnCase do
       use Phoenix.ConnTest
       import ToDoListWeb.Router.Helpers
       import ToDoListWeb.AuthCase
+      import ToDoList.Fixtures
 
       # The default endpoint for testing
       @endpoint ToDoListWeb.Endpoint
