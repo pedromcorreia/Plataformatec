@@ -19,3 +19,11 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
 # Plataformatec
+
+## Run project
+
+### To start
+> mix phx.server
+
+### Create, migrate and seed the database
+> mix ecto.setup
